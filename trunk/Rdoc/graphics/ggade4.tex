@@ -657,6 +657,102 @@ The complex figures are aggregated with the package \texttt{cowplot} (\cite{cowp
 
 \subsection{Heatmap and PCA}
 
+preliminary analysis
+\begin{Schunk}
+\begin{Sinput}
+  tabenv <- butterfly$envir
+  tabgen <- butterfly$genet
+  pcaenv <- dudi.pca(tabenv,nf=2,scannf=FALSE)
+  pcagen <- dudi.pca(tabgen,nf=2,scannf=FALSE)
+\end{Sinput}
+\end{Schunk}
+
+preparation of the graphics related to the PCAs of genetic features and environmental variables.
+\begin{Schunk}
+\begin{Sinput}
+  require(ggplot2)
+  require(ggrepel)
+  require(ggforce)
+  ### variable representation
+  auxi <- pcaenv$co
+  auxi$label <- rownames(auxi)
+  ggx <- ggplot(data=auxi,aes(Comp1,Comp2,label=label) )
+  ggx <- ggx + geom_hline(yintercept = 0)+geom_vline(xintercept = 0)
+  ggx <- ggx + xlab("axis 1") + ylab("axis 2")
+  ggx <- ggx + geom_circle(data=data.frame(x0=0,y0=0),aes(x0=x0, y0=y0, r=1),inherit.aes = FALSE)
+  ggx <- ggx + geom_segment(aes(x=0,xend =Comp1, y=0,yend = Comp2),
+                           arrow = arrow(length = unit(0.2,"cm")))
+  ggx <- ggx + geom_label_repel(size = 3.5,segment.alpha=0.7,segment.color = "darkgrey",
+                               fontface = 'bold',col="black")
+  ggVarEnv <- ggx + theme_bw() + coord_fixed(ratio=1)
+  auxi <- pcagen$co
+  auxi$label <- rownames(auxi)
+  ggx <- ggplot(data=auxi,aes(Comp1,Comp2,label=label) )
+  ggx <- ggx + geom_hline(yintercept = 0)+geom_vline(xintercept = 0)
+  ggx <- ggx + xlab("axis 1") + ylab("axis 2")
+  ggx <- ggx + geom_segment(aes(x=0,xend =Comp1, y=0,yend = Comp2),
+                           arrow = arrow(length = unit(0.2,"cm")))
+  ggx <- ggx + geom_label_repel(size = 3.5,segment.alpha=0.7,segment.color = "darkgrey",
+                               fontface = 'bold',col="black")
+  ggVarGen <- ggx + theme_bw() + coord_fixed(ratio=1)
+  ### representation of the samples
+  auxi <- pcaenv$li
+  auxi$label <- rownames(auxi)
+  gg <- ggplot(auxi,aes(Axis1,Axis2,label=label))
+  gg <- gg + geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
+  gg <- gg + geom_point(shape=19,size=3)
+  gg <- gg + geom_label_repel(size = 3,segment.alpha=0.7,segment.color = "darkgrey")
+  ggSampEnv <-  gg + theme_bw()+ coord_fixed(ratio=1)
+  auxi <- pcagen$li
+  auxi$label <- rownames(auxi)
+  gg <- ggplot(auxi,aes(Axis1,Axis2,label=label))
+  gg <- gg + geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
+  gg <- gg + geom_point(shape=19,size=3)
+  gg <- gg + geom_label_repel(size = 3,segment.alpha=0.7,segment.color = "darkgrey")
+  ggSampGen <-  gg + theme_bw()+ coord_fixed(ratio=1)
+  ## eigenvalues
+  gg <- ggplot(data=data.frame(eig=pcaenv$eig,nf=1:length(pcaenv$eig)), aes(x=nf, y=eig)) 
+  gg <- gg + geom_bar(stat="identity") + ggtitle("Eigenvalues from PCA") 
+  ggEigEnv <- gg + ylab("Eigenvalues") + xlab("axis") + theme_light() 
+  gg <- ggplot(data=data.frame(eig=pcagen$eig,nf=1:length(pcagen$eig)), aes(x=nf, y=eig)) 
+  gg <- gg + geom_bar(stat="identity") + ggtitle("Eigenvalues from PCA") 
+  ggEigGen <- gg + ylab("Eigenvalues") + xlab("axis") + theme_light() 
+\end{Sinput}
+\end{Schunk}
+
+preparation of the heatmap representation
+\begin{Schunk}
+\begin{Sinput}
+  require(ComplexHeatmap)
+  colgradient <- colorRamps::matlab.like2(25)
+  tabx <- pcagen$tab
+  heat1 <- Heatmap(t(tabx), col=colgradient, #rect_gp = gpar(col = "white", lwd = 0.5),
+                  row_names_gp = gpar(fontsize = 0),column_names_gp = gpar(fontsize = 7),
+                  clustering_distance_rows = "euclidean",clustering_distance_columns = "euclidean",
+                  clustering_method_rows = "ward.D",clustering_method_columns = "ward.D",
+                  name="genetic",
+                  top_annotation =HeatmapAnnotation(df=as.data.frame(tabenv)))
+\end{Sinput}
+\end{Schunk}
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+  require(cowplot)
+  grid1 <- plot_grid(ggEigEnv,ggVarEnv,ggSampEnv,ncol=1)
+  grid2 <- plot_grid(ggEigGen,ggVarGen,ggSampGen,ncol=1)
+  grob1 <- grid.grabExpr(draw(heat1,merge_legend = TRUE, heatmap_legend_side = "bottom",
+                             annotation_legend_side = "bottom"))
+  plot_grid(grob1,grid2,grid1,ncol=3,rel_widths = c(2,1,1))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{figs/sweave-heat1}
+\caption{Representation of the preliminary analysis of butterfly data from R package \texttt{ade4}.}
+\label{fig:heat1}
+\end{center}
+\end{figure}
 
 
 
@@ -699,46 +795,50 @@ Random number generation:
  Sample:  Rounding 
  
 attached base packages:
- [1] datasets  parallel  stats     graphics  utils     stats4    tools     grDevices
- [9] methods   base     
+ [1] grid      datasets  parallel  stats     graphics  utils     stats4    tools    
+ [9] grDevices methods   base     
 
 other attached packages:
- [1] magick_2.0           imager_0.41.2        magrittr_1.5        
- [4] dplyr_1.0.2          ggforce_0.2.2        ggrepel_0.8.1       
- [7] cowplot_0.9.4        ggplot2_3.3.2        knitr_1.23          
-[10] pixmap_0.4-11        ade4_1.7-15          RColorBrewer_1.1-2  
-[13] rtracklayer_1.44.0   GenomicRanges_1.36.0 GenomeInfoDb_1.20.0 
-[16] IRanges_2.18.0       S4Vectors_0.22.1     BiocGenerics_0.30.0 
+ [1] ComplexHeatmap_2.0.0 magick_2.0           imager_0.41.2       
+ [4] magrittr_1.5         dplyr_1.0.2          ggforce_0.2.2       
+ [7] ggrepel_0.8.1        cowplot_0.9.4        ggplot2_3.3.2       
+[10] knitr_1.23           pixmap_0.4-11        ade4_1.7-15         
+[13] RColorBrewer_1.1-2   rtracklayer_1.44.0   GenomicRanges_1.36.0
+[16] GenomeInfoDb_1.20.0  IRanges_2.18.0       S4Vectors_0.22.1    
+[19] BiocGenerics_0.30.0 
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.5                  lattice_0.20-38            
- [3] png_0.1-7                   Rsamtools_2.0.0            
- [5] Biostrings_2.52.0           digest_0.6.22              
- [7] R6_2.4.0                    tiff_0.1-5                 
- [9] plyr_1.8.4                  pillar_1.4.7               
-[11] zlibbioc_1.30.0             rlang_0.4.9                
-[13] rstudioapi_0.10             Matrix_1.2-17              
-[15] bmp_0.3                     labeling_0.3               
-[17] BiocParallel_1.18.1         stringr_1.4.0              
-[19] igraph_1.2.4.1              RCurl_1.95-4.12            
-[21] polyclip_1.10-0             munsell_0.5.0              
-[23] DelayedArray_0.10.0         compiler_3.6.3             
-[25] xfun_0.10                   pkgconfig_2.0.3            
-[27] readbitmap_0.1.5            tidyselect_1.1.0           
-[29] SummarizedExperiment_1.14.0 tibble_3.0.4               
-[31] GenomeInfoDbData_1.2.1      matrixStats_0.55.0         
-[33] XML_3.98-1.20               crayon_1.3.4               
-[35] withr_2.1.2                 GenomicAlignments_1.20.0   
-[37] MASS_7.3-51.4               bitops_1.0-6               
-[39] grid_3.6.3                  gtable_0.3.0               
-[41] lifecycle_0.2.0             scales_1.0.0               
-[43] stringi_1.4.3               farver_1.1.0               
-[45] XVector_0.24.0              ellipsis_0.3.0             
-[47] generics_0.0.2              vctrs_0.3.5                
-[49] Biobase_2.44.0              glue_1.4.2                 
-[51] tweenr_1.0.1                purrr_0.3.4                
-[53] jpeg_0.1-8.1                colorspace_1.4-1           
-[55] isoband_0.2.3              
+ [1] Rcpp_1.0.5                  circlize_0.4.8             
+ [3] lattice_0.20-38             png_0.1-7                  
+ [5] Rsamtools_2.0.0             Biostrings_2.52.0          
+ [7] digest_0.6.22               R6_2.4.0                   
+ [9] tiff_0.1-5                  plyr_1.8.4                 
+[11] pillar_1.4.7                GlobalOptions_0.1.1        
+[13] zlibbioc_1.30.0             rlang_0.4.9                
+[15] rstudioapi_0.10             GetoptLong_0.1.7           
+[17] Matrix_1.2-17               bmp_0.3                    
+[19] labeling_0.3                BiocParallel_1.18.1        
+[21] stringr_1.4.0               igraph_1.2.4.1             
+[23] RCurl_1.95-4.12             polyclip_1.10-0            
+[25] munsell_0.5.0               DelayedArray_0.10.0        
+[27] compiler_3.6.3              xfun_0.10                  
+[29] pkgconfig_2.0.3             shape_1.4.4                
+[31] readbitmap_0.1.5            tidyselect_1.1.0           
+[33] SummarizedExperiment_1.14.0 tibble_3.0.4               
+[35] GenomeInfoDbData_1.2.1      matrixStats_0.55.0         
+[37] XML_3.98-1.20               crayon_1.3.4               
+[39] withr_2.1.2                 GenomicAlignments_1.20.0   
+[41] MASS_7.3-51.4               bitops_1.0-6               
+[43] gtable_0.3.0                lifecycle_0.2.0            
+[45] scales_1.0.0                stringi_1.4.3              
+[47] farver_1.1.0                XVector_0.24.0             
+[49] colorRamps_2.3              ellipsis_0.3.0             
+[51] generics_0.0.2              vctrs_0.3.5                
+[53] rjson_0.2.20                Biobase_2.44.0             
+[55] glue_1.4.2                  tweenr_1.0.1               
+[57] purrr_0.3.4                 jpeg_0.1-8.1               
+[59] clue_0.3-57                 colorspace_1.4-1           
+[61] cluster_2.1.0               isoband_0.2.3              
 \end{Soutput}
 \begin{Sinput}
   options(encoding="latin1",prompt=">  ", continue=" ", width = 85)

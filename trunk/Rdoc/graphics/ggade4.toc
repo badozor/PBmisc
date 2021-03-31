@@ -10,8 +10,8 @@
 \contentsline {section}{\numberline {6}2D density}{15}{section.6}
 \contentsline {section}{\numberline {7}Adding a picture}{17}{section.7}
 \contentsline {section}{\numberline {8}Complex figures and Examples}{20}{section.8}
-\contentsline {subsection}{\numberline {8.1}Heatmap and PCA}{21}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Coinertia analysis}{21}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}K-table representations}{21}{subsection.8.3}
-\contentsline {section}{\numberline {9}Conclusion}{21}{section.9}
-\contentsline {section}{\numberline {10}Appendix}{21}{section.10}
+\contentsline {subsection}{\numberline {8.1}Heatmap and PCA}{20}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Coinertia analysis}{22}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}K-table representations}{22}{subsection.8.3}
+\contentsline {section}{\numberline {9}Conclusion}{22}{section.9}
+\contentsline {section}{\numberline {10}Appendix}{23}{section.10}

@@ -601,6 +601,98 @@ The complex figures are aggregated with the package \texttt{cowplot} (\cite{cowp
 
 \subsection{Heatmap and PCA}
 
+preliminary analysis
+<<>>=
+tabenv <- butterfly$envir
+tabgen <- butterfly$genet
+pcaenv <- dudi.pca(tabenv,nf=2,scannf=FALSE)
+pcagen <- dudi.pca(tabgen,nf=2,scannf=FALSE)
+@
+
+preparation of the graphics related to the PCAs of genetic features and environmental variables.
+<<>>=
+require(ggplot2)
+require(ggrepel)
+require(ggforce)
+### variable representation
+auxi <- pcaenv$co
+auxi$label <- rownames(auxi)
+ggx <- ggplot(data=auxi,aes(Comp1,Comp2,label=label) )
+ggx <- ggx + geom_hline(yintercept = 0)+geom_vline(xintercept = 0)
+ggx <- ggx + xlab("axis 1") + ylab("axis 2")
+ggx <- ggx + geom_circle(data=data.frame(x0=0,y0=0),aes(x0=x0, y0=y0, r=1),inherit.aes = FALSE)
+ggx <- ggx + geom_segment(aes(x=0,xend =Comp1, y=0,yend = Comp2),
+                          arrow = arrow(length = unit(0.2,"cm")))
+ggx <- ggx + geom_label_repel(size = 3.5,segment.alpha=0.7,segment.color = "darkgrey",
+                              fontface = 'bold',col="black")
+ggVarEnv <- ggx + theme_bw() + coord_fixed(ratio=1)
+
+auxi <- pcagen$co
+auxi$label <- rownames(auxi)
+ggx <- ggplot(data=auxi,aes(Comp1,Comp2,label=label) )
+ggx <- ggx + geom_hline(yintercept = 0)+geom_vline(xintercept = 0)
+ggx <- ggx + xlab("axis 1") + ylab("axis 2")
+ggx <- ggx + geom_segment(aes(x=0,xend =Comp1, y=0,yend = Comp2),
+                          arrow = arrow(length = unit(0.2,"cm")))
+ggx <- ggx + geom_label_repel(size = 3.5,segment.alpha=0.7,segment.color = "darkgrey",
+                              fontface = 'bold',col="black")
+ggVarGen <- ggx + theme_bw() + coord_fixed(ratio=1)
+
+### representation of the samples
+auxi <- pcaenv$li
+auxi$label <- rownames(auxi)
+gg <- ggplot(auxi,aes(Axis1,Axis2,label=label))
+gg <- gg + geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
+gg <- gg + geom_point(shape=19,size=3)
+gg <- gg + geom_label_repel(size = 3,segment.alpha=0.7,segment.color = "darkgrey")
+ggSampEnv <-  gg + theme_bw()+ coord_fixed(ratio=1)
+
+auxi <- pcagen$li
+auxi$label <- rownames(auxi)
+gg <- ggplot(auxi,aes(Axis1,Axis2,label=label))
+gg <- gg + geom_hline(yintercept = 0) + geom_vline(xintercept = 0)
+gg <- gg + geom_point(shape=19,size=3)
+gg <- gg + geom_label_repel(size = 3,segment.alpha=0.7,segment.color = "darkgrey")
+ggSampGen <-  gg + theme_bw()+ coord_fixed(ratio=1)
+
+## eigenvalues
+gg <- ggplot(data=data.frame(eig=pcaenv$eig,nf=1:length(pcaenv$eig)), aes(x=nf, y=eig)) 
+gg <- gg + geom_bar(stat="identity") + ggtitle("Eigenvalues from PCA") 
+ggEigEnv <- gg + ylab("Eigenvalues") + xlab("axis") + theme_light() 
+
+gg <- ggplot(data=data.frame(eig=pcagen$eig,nf=1:length(pcagen$eig)), aes(x=nf, y=eig)) 
+gg <- gg + geom_bar(stat="identity") + ggtitle("Eigenvalues from PCA") 
+ggEigGen <- gg + ylab("Eigenvalues") + xlab("axis") + theme_light() 
+@
+
+preparation of the heatmap representation
+<<>>=
+require(ComplexHeatmap)
+colgradient <- colorRamps::matlab.like2(25)
+tabx <- pcagen$tab
+heat1 <- Heatmap(t(tabx), col=colgradient, #rect_gp = gpar(col = "white", lwd = 0.5),
+                 row_names_gp = gpar(fontsize = 0),column_names_gp = gpar(fontsize = 7),
+                 clustering_distance_rows = "euclidean",clustering_distance_columns = "euclidean",
+                 clustering_method_rows = "ward.D",clustering_method_columns = "ward.D",
+                 name="genetic",
+                 top_annotation =HeatmapAnnotation(df=as.data.frame(tabenv)))
+@
+
+
+\begin{figure}[H]
+\begin{center}
+<<label=heat1, echo=TRUE, results=verbatim, fig=TRUE, width=12, height=8,eval=TRUE>>=
+require(cowplot)
+grid1 <- plot_grid(ggEigEnv,ggVarEnv,ggSampEnv,ncol=1)
+grid2 <- plot_grid(ggEigGen,ggVarGen,ggSampGen,ncol=1)
+grob1 <- grid.grabExpr(draw(heat1,merge_legend = TRUE, heatmap_legend_side = "bottom",
+                            annotation_legend_side = "bottom"))
+plot_grid(grob1,grid2,grid1,ncol=3,rel_widths = c(2,1,1))
+@
+\caption{Representation of the preliminary analysis of butterfly data from R package \texttt{ade4}.}
+\label{fig:heat1}
+\end{center}
+\end{figure}
 
 
 
