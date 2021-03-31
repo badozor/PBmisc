@@ -78,7 +78,7 @@ This program/document is distributed in the hope that it will be useful, but WIT
 
 \section{Motivations}
 
-The objectives of this documment are to propose elements and alternatives for \texttt{ggplot2} implementation of the graphical function from R package ADE-4 (\cite{ade4_2004,ade4_2007a,ade4_2007b}). why ggplot2 ?
+The objectives of this documment are to propose elements and alternatives for \texttt{ggplot2} implementation (\cite{ggplot2}) of the graphical function from R package ADE-4 (\cite{ade4_2004,ade4_2007a,ade4_2007b}). why ggplot2 ?
 
 
 \section{Gestion of the limits}
@@ -350,7 +350,7 @@ Representation of the samples on the first factorial plan
 \end{figure}
 
 \subsection{Ellipses and stars}
-For this representation, we need to compute the position of the gravity center of the each ellipse. This operation was performed by the R function \texttt{prep.tab.class}. The implementation of this function is given below:
+For this representation, we need to compute the position of the gravity center of each ellipse. This operation was performed by the R function \texttt{prep.tab.class}. The implementation of this function is given below:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -480,9 +480,9 @@ The representation for one group is given below:
   gg
 \end{Sinput}
 \end{Schunk}
-\includegraphics{figs/sweave-lichull1}
+\includegraphics{figs/sweave-lichull2}
 \caption{Chull representation of the observation of the first vectorial plan.}
-\label{fig:lichull1}
+\label{fig:lichull2}
 \end{center}
 \end{figure}
 
@@ -567,35 +567,142 @@ The representation for one group is given below:
 
 \section{Adding a picture}
 
-
-\url{https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html}
-
-
+The functions from the R package imager (\cite{imager}) can be used To add picture on ggplot graphics (\url{https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html}).
+\begin{figure}[H]
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
   library(ggplot2)
   library(dplyr)
   library(imager)
-  pdf("figs/image1.pdf",width=8, height=8)
-  parrots <- load.image(file.path(.libPaths()[1],'imager/extdata/parrots.png'))
+  parrots <- load.image("/export/scratch/R/library/imager/extdata/parrots.png")
   df <- as.data.frame(parrots,wide="c") %>% mutate(rgb.val=rgb(c.1,c.2,c.3))
   df$y <- rev(df$y)
-  p <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity() + coord_fixed(ratio=1)
-  p
-  dev.off()
+  gg <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity()
+  gg <- gg + xlab("x") + ylab("y")
+  gg <- gg + theme_bw()  + coord_fixed(ratio=1)
+  gg
 \end{Sinput}
 \end{Schunk}
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5,page=1]{figs/image1.pdf}
+\includegraphics{figs/sweave-image1}
 \caption{Representation of "parrots" picture from R package \texttt{imager}.}
 \label{fig:image1}
 \end{center}
 \end{figure}
 
 
-\section{Complex figure with the package \texttt{cowplot}}
+
+Test for PNM format with imager ... resultats boff (?!)
+\begin{figure}[H]
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+  library(ggplot2)
+  library(dplyr)
+  library(imager)
+  #photo1 <- load.image("/export/scratch/R/library/ade4/inst/pictures/buterfly.pnm")
+  maps1 <- load.image("/export/scratch/R/library/ade4/pictures/butterfly.pnm")
+  df <- as.data.frame(maps1)
+  # black=#000000 and white = #FFFFFF
+  df$rgb.val <- ifelse(df$value==0,'#000000','#FFFFFF')
+  df$y <- rev(df$y)
+  gg <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity()
+  gg <- gg + xlab("x") + ylab("y")
+  gg <- gg + theme_bw()  + coord_fixed(ratio=1)
+  gg
+\end{Sinput}
+\end{Schunk}
+\includegraphics{figs/sweave-image2}
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image2}
+\end{center}
+\end{figure}
+
+For the color code see https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf. The previous results is not very good. we try to used the R package \texttt{magick} https://docs.ropensci.org/magick/articles/intro.html). The code is given below:
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+  require(magick)
+  maps2 <-  image_read("/export/scratch/R/library/ade4/pictures/butterfly.pnm") 
+  maps2
+\end{Sinput}
+\begin{Soutput}
+# A tibble: 1 x 7
+  format width height colorspace matte filesize density
+  <chr>  <int>  <int> <chr>      <lgl>    <int> <chr>  
+1 PGM      222    250 Gray       FALSE    55515 72x72  
+\end{Soutput}
+\end{Schunk}
+\includegraphics{figs/sweave-image3}
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image3}
+\end{center}
+\end{figure}
+
+add points and information
+\begin{figure}[H]
+\begin{center}
+\begin{Schunk}
+\begin{Sinput}
+  data(butterfly)
+  butterfly$xy
+\end{Sinput}
+\begin{Soutput}
+      x   y
+SS   41 238
+SB   57 134
+WSB  56 131
+JRC  57 127
+JRH  58 124
+SJ   67 126
+CR   73 121
+UO  165  23
+LO  167  18
+DP   77 127
+PZ   95  78
+MC   72 186
+IF  108 136
+AF  106 128
+GH  129 110
+GL  113 141
+\end{Soutput}
+\begin{Sinput}
+  gg <- ggplot(butterfly$xy,aes(x,y)) 
+  gg <- gg + annotation_raster(as.raster(maps2),xmin=0,xmax=222,
+                                         ymin=0,ymax=250,interpolate = TRUE)
+  gg <- gg + geom_point()
+  gg <- gg + xlab("x") + ylab("y")
+  gg <- gg + theme_bw()  + coord_fixed(ratio=1) 
+  gg <- gg + scale_y_continuous(limits=c(0,250)) 
+  gg <- gg + scale_x_continuous(limits=c(0,222))
+  gg
+\end{Sinput}
+\end{Schunk}
+\includegraphics{figs/sweave-image4}
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image4}
+\end{center}
+\end{figure}
+
+
+\section{Complex figures and Examples}
+
+The complex figures are aggregated with the package \texttt{cowplot} (\cite{cowplot}).
+
+\subsection{Heatmap and PCA}
+
+
+
+
+\subsection{Coinertia analysis}
+
+
+
+
+\subsection{K-table representations}
 
 
 
@@ -633,41 +740,48 @@ attached base packages:
  [9] methods   base     
 
 other attached packages:
- [1] ggforce_0.2.2        ggrepel_0.8.1        cowplot_0.9.4       
- [4] ggplot2_3.3.2        knitr_1.23           pixmap_0.4-11       
- [7] ade4_1.7-15          RColorBrewer_1.1-2   rtracklayer_1.44.0  
-[10] GenomicRanges_1.36.0 GenomeInfoDb_1.20.0  IRanges_2.18.0      
-[13] S4Vectors_0.22.1     BiocGenerics_0.30.0 
+ [1] magick_2.0           imager_0.41.2        magrittr_1.5        
+ [4] dplyr_1.0.2          ggforce_0.2.2        ggrepel_0.8.1       
+ [7] cowplot_0.9.4        ggplot2_3.3.2        knitr_1.23          
+[10] pixmap_0.4-11        ade4_1.7-15          RColorBrewer_1.1-2  
+[13] rtracklayer_1.44.0   GenomicRanges_1.36.0 GenomeInfoDb_1.20.0 
+[16] IRanges_2.18.0       S4Vectors_0.22.1     BiocGenerics_0.30.0 
 
 loaded via a namespace (and not attached):
- [1] SummarizedExperiment_1.14.0 tidyselect_1.1.0           
- [3] xfun_0.10                   purrr_0.3.4                
- [5] lattice_0.20-38             colorspace_1.4-1           
- [7] vctrs_0.3.5                 generics_0.0.2             
- [9] XML_3.98-1.20               rlang_0.4.9                
-[11] isoband_0.2.3               pillar_1.4.7               
-[13] glue_1.4.2                  withr_2.1.2                
-[15] tweenr_1.0.1                BiocParallel_1.18.1        
-[17] matrixStats_0.55.0          GenomeInfoDbData_1.2.1     
-[19] lifecycle_0.2.0             zlibbioc_1.30.0            
-[21] Biostrings_2.52.0           munsell_0.5.0              
-[23] gtable_0.3.0                labeling_0.3               
-[25] Biobase_2.44.0              Rcpp_1.0.5                 
-[27] scales_1.0.0                DelayedArray_0.10.0        
-[29] XVector_0.24.0              farver_1.1.0               
-[31] Rsamtools_2.0.0             digest_0.6.22              
-[33] dplyr_1.0.2                 polyclip_1.10-0            
-[35] grid_3.6.3                  bitops_1.0-6               
-[37] magrittr_1.5                RCurl_1.95-4.12            
-[39] tibble_3.0.4                crayon_1.3.4               
-[41] pkgconfig_2.0.3             MASS_7.3-51.4              
-[43] ellipsis_0.3.0              Matrix_1.2-17              
-[45] rstudioapi_0.10             R6_2.4.0                   
-[47] GenomicAlignments_1.20.0    compiler_3.6.3             
+ [1] Rcpp_1.0.5                  lattice_0.20-38            
+ [3] png_0.1-7                   Rsamtools_2.0.0            
+ [5] Biostrings_2.52.0           utf8_1.1.4                 
+ [7] assertthat_0.2.1            digest_0.6.22              
+ [9] R6_2.4.0                    tiff_0.1-5                 
+[11] plyr_1.8.4                  pillar_1.4.7               
+[13] zlibbioc_1.30.0             rlang_0.4.9                
+[15] rstudioapi_0.10             Matrix_1.2-17              
+[17] bmp_0.3                     labeling_0.3               
+[19] BiocParallel_1.18.1         stringr_1.4.0              
+[21] igraph_1.2.4.1              RCurl_1.95-4.12            
+[23] polyclip_1.10-0             munsell_0.5.0              
+[25] DelayedArray_0.10.0         compiler_3.6.3             
+[27] xfun_0.10                   pkgconfig_2.0.3            
+[29] readbitmap_0.1.5            tidyselect_1.1.0           
+[31] SummarizedExperiment_1.14.0 tibble_3.0.4               
+[33] GenomeInfoDbData_1.2.1      matrixStats_0.55.0         
+[35] XML_3.98-1.20               fansi_0.4.0                
+[37] crayon_1.3.4                withr_2.1.2                
+[39] GenomicAlignments_1.20.0    MASS_7.3-51.4              
+[41] bitops_1.0-6                grid_3.6.3                 
+[43] gtable_0.3.0                lifecycle_0.2.0            
+[45] scales_1.0.0                cli_1.1.0                  
+[47] stringi_1.4.3               farver_1.1.0               
+[49] XVector_0.24.0              ellipsis_0.3.0             
+[51] generics_0.0.2              vctrs_0.3.5                
+[53] Biobase_2.44.0              glue_1.4.2                 
+[55] tweenr_1.0.1                purrr_0.3.4                
+[57] jpeg_0.1-8.1                colorspace_1.4-1           
+[59] isoband_0.2.3              
 \end{Soutput}
 \begin{Sinput}
   options(encoding="latin1",prompt=">  ", continue=" ", width = 85)
->  save.image()
+>  #save.image()
 \end{Sinput}
 \end{Schunk}
 

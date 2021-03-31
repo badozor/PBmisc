@@ -85,7 +85,7 @@ This program/document is distributed in the hope that it will be useful, but WIT
 
 \section{Motivations}
 
-The objectives of this documment are to propose elements and alternatives for \texttt{ggplot2} implementation of the graphical function from R package ADE-4 (\cite{ade4_2004,ade4_2007a,ade4_2007b}). why ggplot2 ?
+The objectives of this documment are to propose elements and alternatives for \texttt{ggplot2} implementation (\cite{ggplot2}) of the graphical function from R package ADE-4 (\cite{ade4_2004,ade4_2007a,ade4_2007b}). why ggplot2 ?
 
 
 \section{Gestion of the limits}
@@ -327,7 +327,7 @@ gg
 \end{figure}
 
 \subsection{Ellipses and stars}
-For this representation, we need to compute the position of the gravity center of the each ellipse. This operation was performed by the R function \texttt{prep.tab.class}. The implementation of this function is given below:
+For this representation, we need to compute the position of the gravity center of each ellipse. This operation was performed by the R function \texttt{prep.tab.class}. The implementation of this function is given below:
 
 <<>>=
 prep.tab.class <- function(x,fac,varnames=c("Axis1","Axis2"),rm.X=TRUE,...){
@@ -430,7 +430,7 @@ gg
 
 \begin{figure}[H]
 \begin{center}
-<<label=lichull1, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
+<<label=lichull2, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
 require(ggplot2)
 # data 
 auxi <- deug1$li
@@ -446,7 +446,7 @@ gg <-  gg + theme_bw() + coord_fixed(ratio=1)
 gg
 @
 \caption{Chull representation of the observation of the first vectorial plan.}
-\label{fig:lichull1}
+\label{fig:lichull2}
 \end{center}
 \end{figure}
 
@@ -522,33 +522,103 @@ gg
 
 \section{Adding a picture}
 
-
-\url{https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html}
-
-
-<<label=image1, echo=TRUE,eval=FALSE>>=
+The functions from the R package imager (\cite{imager}) can be used To add picture on ggplot graphics (\url{https://cran.r-project.org/web/packages/imager/vignettes/gettingstarted.html}).
+\begin{figure}[H]
+\begin{center}
+<<label=image1, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
 library(ggplot2)
 library(dplyr)
 library(imager)
-pdf("figs/image1.pdf",width=8, height=8)
-parrots <- load.image(file.path(.libPaths()[1],'imager/extdata/parrots.png'))
+parrots <- load.image("/export/scratch/R/library/imager/extdata/parrots.png")
 df <- as.data.frame(parrots,wide="c") %>% mutate(rgb.val=rgb(c.1,c.2,c.3))
 df$y <- rev(df$y)
-p <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity() + coord_fixed(ratio=1)
-p
-dev.off()
+gg <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity()
+gg <- gg + xlab("x") + ylab("y")
+gg <- gg + theme_bw()  + coord_fixed(ratio=1)
+gg
 @
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5,page=1]{figs/image1.pdf}
 \caption{Representation of "parrots" picture from R package \texttt{imager}.}
 \label{fig:image1}
 \end{center}
 \end{figure}
 
 
-\section{Complex figure with the package \texttt{cowplot}}
+
+Test for PNM format with imager ... resultats boff (?!)
+\begin{figure}[H]
+\begin{center}
+<<label=image2, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
+library(ggplot2)
+library(dplyr)
+library(imager)
+#photo1 <- load.image("/export/scratch/R/library/ade4/inst/pictures/buterfly.pnm")
+maps1 <- load.image("/export/scratch/R/library/ade4/pictures/butterfly.pnm")
+df <- as.data.frame(maps1)
+# black=#000000 and white = #FFFFFF
+df$rgb.val <- ifelse(df$value==0,'#000000','#FFFFFF')
+df$y <- rev(df$y)
+gg <- ggplot(df,aes(x,y)) + geom_raster(aes(fill=rgb.val)) + scale_fill_identity()
+gg <- gg + xlab("x") + ylab("y")
+gg <- gg + theme_bw()  + coord_fixed(ratio=1)
+gg
+@
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image2}
+\end{center}
+\end{figure}
+
+For the color code see https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf. The previous results is not very good. we try to used the R package \texttt{magick} https://docs.ropensci.org/magick/articles/intro.html). The code is given below:
+
+
+\begin{figure}[H]
+\begin{center}
+<<label=image3, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
+require(magick)
+maps2 <-  image_read("/export/scratch/R/library/ade4/pictures/butterfly.pnm") 
+maps2
+@
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image3}
+\end{center}
+\end{figure}
+
+add points and information
+\begin{figure}[H]
+\begin{center}
+<<label=image4, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
+data(butterfly)
+butterfly$xy
+gg <- ggplot(butterfly$xy,aes(x,y)) 
+gg <- gg + annotation_raster(as.raster(maps2),xmin=0,xmax=222,
+                                        ymin=0,ymax=250,interpolate = TRUE)
+gg <- gg + geom_point()
+gg <- gg + xlab("x") + ylab("y")
+gg <- gg + theme_bw()  + coord_fixed(ratio=1) 
+gg <- gg + scale_y_continuous(limits=c(0,250)) 
+gg <- gg + scale_x_continuous(limits=c(0,222))
+gg
+@
+\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
+\label{fig:image4}
+\end{center}
+\end{figure}
+
+
+\section{Complex figures and Examples}
+
+The complex figures are aggregated with the package \texttt{cowplot} (\cite{cowplot}).
+
+\subsection{Heatmap and PCA}
+
+
+
+
+\subsection{Coinertia analysis}
+
+
+
+
+\subsection{K-table representations}
 
 
 
@@ -566,7 +636,7 @@ dev.off()
 <<eval=TRUE, echo=TRUE>>=
 print(sessionInfo(),locale=FALSE)
 options(encoding="latin1",prompt=">  ", continue=" ", width = 85)
-save.image()
+#save.image()
 @
 
 \end{document}
