@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.12.17)  31 MAR 2021 13:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.12.17)  31 MAR 2021 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1129,8 +1129,7 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 105.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
-))))
-No file ggade4.aux.
+)))) (./ggade4.aux)
 \openout1 = `ggade4.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
@@ -1149,6 +1148,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 33.
+
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
@@ -1196,12 +1196,14 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 33.
 LaTeX Info: Redefining \pageref on input line 33.
 LaTeX Info: Redefining \nameref on input line 33.
+
+(./ggade4.out) (./ggade4.out)
 \@outlinefile=\write5
 \openout5 = `ggade4.out'.
 
-
-ABD: EveryShipout initializing macros (./figs/sweave-concordance.tex)
-</export/users/pierre/Images/Rlogo.png, id=32, 100.375pt x 76.285pt>
+ ABD: EveryShipout initializing macros
+(./figs/sweave-concordance.tex)
+</export/users/pierre/Images/Rlogo.png, id=100, 100.375pt x 76.285pt>
 File: /export/users/pierre/Images/Rlogo.png Graphic file (type png)
 
 <use /export/users/pierre/Images/Rlogo.png>
@@ -1253,28 +1255,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--71
 \T1/aett/m/n/10 TIC-U-LAR PUR-POSE. See the GNU Gen-eral Pub-lic Li-cense for
  []
 
+(./ggade4.toc [1
 
-Package hyperref Warning: old toc file detected, not used; run LaTeX again.
-
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </export/users/pierre/Image
+s/Rlogo.png>])
 \tf@toc=\write6
 \openout6 = `ggade4.toc'.
 
 
-LaTeX Warning: Citation `ggplot2' on page 1 undefined on input line 81.
-
-
-LaTeX Warning: Citation `ade4_2004' on page 1 undefined on input line 81.
-
-
-LaTeX Warning: Citation `ade4_2007a' on page 1 undefined on input line 81.
-
-
-LaTeX Warning: Citation `ade4_2007b' on page 1 undefined on input line 81.
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </export/users/pierre/Image
-s/Rlogo.png>] <figs/sweave-eigen1.pdf, id=50, 578.16pt x 578.16pt>
+<figs/sweave-eigen1.pdf, id=136, 578.16pt x 578.16pt>
 File: figs/sweave-eigen1.pdf Graphic file (type pdf)
 
 <use figs/sweave-eigen1.pdf>
@@ -1294,56 +1283,56 @@ File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <8> not available
 (Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 175.
 
-<figs/sweave-coarrow.pdf, id=56, 578.16pt x 578.16pt>
+<figs/sweave-coarrow.pdf, id=146, 578.16pt x 578.16pt>
 File: figs/sweave-coarrow.pdf Graphic file (type pdf)
 
 <use figs/sweave-coarrow.pdf>
 Package pdftex.def Info: figs/sweave-coarrow.pdf used on input line 180.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [3 <./figs/sweave-eigen1.pdf>]
-<figs/sweave-cocircle.pdf, id=67, 578.16pt x 578.16pt>
+<figs/sweave-cocircle.pdf, id=157, 578.16pt x 578.16pt>
 File: figs/sweave-cocircle.pdf Graphic file (type pdf)
 
 <use figs/sweave-cocircle.pdf>
 Package pdftex.def Info: figs/sweave-cocircle.pdf used on input line 210.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [4 <./figs/sweave-coarrow.pdf>]
-<figs/sweave-lilabel.pdf, id=80, 578.16pt x 578.16pt>
+<figs/sweave-lilabel.pdf, id=170, 578.16pt x 578.16pt>
 File: figs/sweave-lilabel.pdf Graphic file (type pdf)
 
 <use figs/sweave-lilabel.pdf>
 Package pdftex.def Info: figs/sweave-lilabel.pdf used on input line 240.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [5 <./figs/sweave-cocircle.pdf>]
-<figs/sweave-liclass1.pdf, id=93, 578.16pt x 578.16pt>
+<figs/sweave-liclass1.pdf, id=183, 578.16pt x 578.16pt>
 File: figs/sweave-liclass1.pdf Graphic file (type pdf)
 
 <use figs/sweave-liclass1.pdf>
 Package pdftex.def Info: figs/sweave-liclass1.pdf used on input line 269.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [6 <./figs/sweave-lilabel.pdf>]
-<figs/sweave-liclass2.pdf, id=109, 578.16pt x 578.16pt>
+<figs/sweave-liclass2.pdf, id=197, 578.16pt x 578.16pt>
 File: figs/sweave-liclass2.pdf Graphic file (type pdf)
 
 <use figs/sweave-liclass2.pdf>
 Package pdftex.def Info: figs/sweave-liclass2.pdf used on input line 293.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [7 <./figs/sweave-liclass1.pdf>]
-<figs/sweave-liclass3.pdf, id=124, 578.16pt x 578.16pt>
+<figs/sweave-liclass3.pdf, id=212, 578.16pt x 578.16pt>
 File: figs/sweave-liclass3.pdf Graphic file (type pdf)
 
 <use figs/sweave-liclass3.pdf>
 Package pdftex.def Info: figs/sweave-liclass3.pdf used on input line 322.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [8 <./figs/sweave-liclass2.pdf>]
-<figs/sweave-liclass4.pdf, id=138, 578.16pt x 578.16pt>
+<figs/sweave-liclass4.pdf, id=226, 578.16pt x 578.16pt>
 File: figs/sweave-liclass4.pdf Graphic file (type pdf)
 
 <use figs/sweave-liclass4.pdf>
 Package pdftex.def Info: figs/sweave-liclass4.pdf used on input line 346.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [9 <./figs/sweave-liclass3.pdf>] [10 <./figs/sweave-liclass4.pdf>] <figs/sweav
-e-liclassSTAR.pdf, id=168, 578.16pt x 578.16pt>
+e-liclassSTAR.pdf, id=253, 578.16pt x 578.16pt>
 File: figs/sweave-liclassSTAR.pdf Graphic file (type pdf)
 
 <use figs/sweave-liclassSTAR.pdf>
@@ -1356,45 +1345,42 @@ Overfull \hbox (49.96497pt too wide) in paragraph at lines 413--414
  []
 
 [11 <./figs/sweave-liclassSTAR.pdf>]
-<figs/sweave-lichull1.pdf, id=180, 578.16pt x 578.16pt>
+<figs/sweave-lichull1.pdf, id=265, 578.16pt x 578.16pt>
 File: figs/sweave-lichull1.pdf Graphic file (type pdf)
 
 <use figs/sweave-lichull1.pdf>
 Package pdftex.def Info: figs/sweave-lichull1.pdf used on input line 457.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [12]
-<figs/sweave-lichull2.pdf, id=186, 578.16pt x 578.16pt>
+<figs/sweave-lichull2.pdf, id=270, 578.16pt x 578.16pt>
 File: figs/sweave-lichull2.pdf Graphic file (type pdf)
 
 <use figs/sweave-lichull2.pdf>
 Package pdftex.def Info: figs/sweave-lichull2.pdf used on input line 483.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [13 <./figs/sweave-lichull1.pdf>]
-<figs/sweave-lidensity1.pdf, id=198, 578.16pt x 578.16pt>
+<figs/sweave-lidensity1.pdf, id=282, 578.16pt x 578.16pt>
 File: figs/sweave-lidensity1.pdf Graphic file (type pdf)
 
 <use figs/sweave-lidensity1.pdf>
 Package pdftex.def Info: figs/sweave-lidensity1.pdf used on input line 510.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [14 <./figs/sweave-lichull2.pdf>]
-<figs/sweave-lidensity2.pdf, id=212, 578.16pt x 578.16pt>
+<figs/sweave-lidensity2.pdf, id=296, 578.16pt x 578.16pt>
 File: figs/sweave-lidensity2.pdf Graphic file (type pdf)
 
 <use figs/sweave-lidensity2.pdf>
 Package pdftex.def Info: figs/sweave-lidensity2.pdf used on input line 535.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [15 <./figs/sweave-lidensity1.pdf>]
-<figs/sweave-lidensity3.pdf, id=224, 578.16pt x 578.16pt>
+<figs/sweave-lidensity3.pdf, id=308, 578.16pt x 578.16pt>
 File: figs/sweave-lidensity3.pdf Graphic file (type pdf)
 
 <use figs/sweave-lidensity3.pdf>
 Package pdftex.def Info: figs/sweave-lidensity3.pdf used on input line 560.
 (pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
  [16 <./figs/sweave-lidensity2.pdf>]
-
-LaTeX Warning: Citation `imager' on page 17 undefined on input line 570.
-
-<figs/sweave-image1.pdf, id=236, 578.16pt x 578.16pt>
+<figs/sweave-image1.pdf, id=321, 578.16pt x 578.16pt>
 File: figs/sweave-image1.pdf Graphic file (type pdf)
 
 <use figs/sweave-image1.pdf>
@@ -1407,7 +1393,7 @@ t . org / web / packages / imager / vignettes /
  []
 
 [17 <./figs/sweave-lidensity3.pdf>]
-<figs/sweave-image2.pdf, id=249, 578.16pt x 578.16pt>
+<figs/sweave-image2.pdf, id=334, 578.16pt x 578.16pt>
 File: figs/sweave-image2.pdf Graphic file (type pdf)
 
 <use figs/sweave-image2.pdf>
@@ -1419,7 +1405,44 @@ Overfull \hbox (116.46393pt too wide) in paragraph at lines 621--622
 t/files/2020-04/colorPaletteCheatsheet.pdf.
  []
 
+<figs/sweave-image4.pdf, id=346, 578.16pt x 578.16pt>
+File: figs/sweave-image4.pdf Graphic file (type pdf)
 
-!pdfTeX error: /usr/bin/pdflatex (file ./figs/sweave-image3.pdf): PDF inclusion
-: required page does not exist <0>
- ==> Fatal error occurred, no output PDF file produced!
+<use figs/sweave-image4.pdf>
+Package pdftex.def Info: figs/sweave-image4.pdf used on input line 647.
+(pdftex.def)             Requested size: 276.00105pt x 275.99626pt.
+ [19 <./figs/sweave-image2.pdf>] (./ggade4.bbl
+[20 <./figs/sweave-image4.pdf>]) [21] [22]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 749.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 749.
+ (./ggade4.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 749.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 749.
+Package rerunfilecheck Info: File `ggade4.out' has not changed.
+(rerunfilecheck)             Checksum: 85AE37E4B5E6C7498F94B982DE1FAC96;1046.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 749.
+ ) 
+Here is how much of TeX's memory you used:
+ 19810 strings out of 493029
+ 390722 string characters out of 6136233
+ 473088 words of memory out of 5000000
+ 22838 multiletter control sequences out of 15000+600000
+ 35629 words of font info for 77 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 55i,7n,82p,387b,542s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmtt8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb>
+Output written on ggade4.pdf (22 pages, 1272093 bytes).
+PDF statistics:
+ 430 PDF objects out of 1000 (max. 8388607)
+ 337 compressed objects within 4 object streams
+ 65 named destinations out of 1000 (max. 500000)
+ 339 words of extra memory for PDF output out of 10000 (max. 10000000)
+

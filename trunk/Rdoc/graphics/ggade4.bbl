@@ -1,0 +1,34 @@
+\begin{thebibliography}{1}
+
+\bibitem{imager}
+Simon Barthelme.
+\newblock {\em imager: Image Processing Library Based on 'CImg'}, 2019.
+\newblock R package version 0.41.2.
+
+\bibitem{ade4_2004}
+D.~Chessel, A.B. Dufour, and J.~Thioulouse.
+\newblock The ade4 package-{I}- {O}ne-table methods.
+\newblock {\em R News}, 4:5--10, 2004.
+
+\bibitem{ade4_2007a}
+S.~Dray and A.B. Dufour.
+\newblock The ade4 package: implementing the duality diagram for ecologists.
+\newblock {\em Journal of Statistical Software}, 22(4):1--20, 2007.
+
+\bibitem{ade4_2007b}
+S.~Dray, A.B. Dufour, and D.~Chessel.
+\newblock The ade4 package-{II}: {T}wo-table and {K}-table methods.
+\newblock {\em R News}, 7(2):47--52, 2007.
+
+\bibitem{ggplot2}
+Hadley Wickham.
+\newblock {\em ggplot2: Elegant Graphics for Data Analysis}.
+\newblock Springer-Verlag New York, 2016.
+
+\bibitem{cowplot}
+Claus~O. Wilke.
+\newblock {\em cowplot: Streamlined Plot Theme and Plot Annotations for
+  'ggplot2'}, 2019.
+\newblock R package version 0.9.4.
+
+\end{thebibliography}

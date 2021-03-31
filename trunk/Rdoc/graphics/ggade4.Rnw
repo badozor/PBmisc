@@ -569,28 +569,19 @@ gg
 
 For the color code see https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf. The previous results is not very good. we try to used the R package \texttt{magick} https://docs.ropensci.org/magick/articles/intro.html). The code is given below:
 
-
-\begin{figure}[H]
-\begin{center}
-<<label=image3, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
+<<label=image3, echo=TRUE,eval=TRUE>>=
 require(magick)
 maps2 <-  image_read("/export/scratch/R/library/ade4/pictures/butterfly.pnm") 
-maps2
 @
-\caption{Representation of the map associated with butterfly data from R package \texttt{ade4}.}
-\label{fig:image3}
-\end{center}
-\end{figure}
 
 add points and information
 \begin{figure}[H]
 \begin{center}
 <<label=image4, echo=TRUE, results=verbatim, fig=TRUE, width=8, height=8,eval=TRUE>>=
 data(butterfly)
-butterfly$xy
 gg <- ggplot(butterfly$xy,aes(x,y)) 
 gg <- gg + annotation_raster(as.raster(maps2),xmin=0,xmax=222,
-                                        ymin=0,ymax=250,interpolate = TRUE)
+                         ymin=0,ymax=250,interpolate = TRUE)
 gg <- gg + geom_point()
 gg <- gg + xlab("x") + ylab("y")
 gg <- gg + theme_bw()  + coord_fixed(ratio=1) 
