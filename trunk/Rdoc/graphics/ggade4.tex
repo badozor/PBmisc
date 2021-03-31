@@ -636,7 +636,7 @@ add points and information
   gg <- ggplot(butterfly$xy,aes(x,y)) 
   gg <- gg + annotation_raster(as.raster(maps2),xmin=0,xmax=222,
                           ymin=0,ymax=250,interpolate = TRUE)
-  gg <- gg + geom_point()
+  gg <- gg + geom_point(shape=21,size=5,fill="green3",col="black")
   gg <- gg + xlab("x") + ylab("y")
   gg <- gg + theme_bw()  + coord_fixed(ratio=1) 
   gg <- gg + scale_y_continuous(limits=c(0,250)) 
